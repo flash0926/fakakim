@@ -1,5 +1,6 @@
-from service.database.models import creat_table,drop_table
+#from service.database.models import creat_table,drop_table
 from service.config.config import init_db
+from service.api.db import creat_table, drop_table
 # 清空表
 drop_table()
 # 创建表

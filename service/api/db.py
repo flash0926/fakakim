@@ -18,9 +18,10 @@ CORS(app, resources=r'/*')
 # cors = CORS(app, resources={r"/*": {"origins": "*"}})
 # ip limit
 limiter = Limiter(
-    app,
+    app=app,
     key_func=get_remote_address,
-    default_limits=["800 per day", "200 per hour"]
+    default_limits=["200 per day", "50 per hour"],
+    storage_uri="memory://",
 )
 
 # #避免与vue冲突
@@ -48,4 +49,12 @@ app.config['JWT_ACCESS_TOKEN EXPIRES'] = datetime.timedelta(days=2)
 jwt = JWTManager(app)
 
 db = SQLAlchemy(app)
+
+def drop_table():
+    with app.app_context():
+        db.drop_all()
+
+def creat_table():
+    with app.app_context():
+        db.create_all()
 
